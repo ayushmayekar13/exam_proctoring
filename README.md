@@ -2,7 +2,7 @@
 
 A comprehensive distributed system for conducting online exams with advanced features including cheating detection, time synchronization, mutual exclusion protocols, load balancing, and data replication.
 
-## 🎯 Features
+## Features
 
 ### Core Functionality
 - **XML-RPC Client-Server Architecture**: Robust communication between coordinator and student clients
@@ -19,30 +19,7 @@ A comprehensive distributed system for conducting online exams with advanced fea
 - **Real-time Updates**: Server-sent events for live monitoring
 - **Responsive Design**: Bootstrap-based modern UI
 
-## 🏗️ Architecture
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Load Balancer │    │   Coordinator   │    │   Replica 1     │
-│   (Port 9000)   │◄──►│   (Port 8000)   │◄──►│   (Port 8001)   │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         │                       │                       │
-         ▼                       ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Student 1     │    │   Student 2     │    │   Student 3     │
-│   (Clock +2s)   │    │   (Clock -3s)   │    │   (Clock +5s)   │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         └───────────────────────┼───────────────────────┘
-                                 │
-                    ┌─────────────────┐
-                    │   Flask UI      │
-                    │   (Port 5000)   │
-                    └─────────────────┘
-```
-
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -146,7 +123,7 @@ python student_client.py 23102A0002 -3.0  # -3 seconds
 python student_client.py 23102A0003 5.0   # +5 seconds
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Running Unit Tests
 
@@ -172,7 +149,7 @@ python load_balancer.py 9000 &
 python -m pytest tests/ -v
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Server Configuration
 
@@ -201,7 +178,7 @@ backends = [
 ]
 ```
 
-## 📊 System Features Explained
+## System Features Explained
 
 ### 1. Berkeley Time Synchronization
 
@@ -265,7 +242,7 @@ Round-robin distribution with health checking:
 3. **Failover**: Automatic failover to healthy backends
 4. **Recovery**: Automatic recovery when backends become healthy
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -307,7 +284,7 @@ Enable debug logging by modifying the logging level in `server.py`:
 logging.basicConfig(level=logging.DEBUG)
 ```
 
-## 📈 Performance Considerations
+## Performance Considerations
 
 ### Scalability
 - **Horizontal Scaling**: Add more server replicas
@@ -320,7 +297,7 @@ logging.basicConfig(level=logging.DEBUG)
 - **Monitoring**: Implement health checks and metrics
 - **Security**: Add authentication and encryption
 
-## 🔒 Security Considerations
+## Security Considerations
 
 ### Current Implementation
 - **Input Validation**: All inputs are validated
@@ -334,7 +311,7 @@ logging.basicConfig(level=logging.DEBUG)
 - **Rate Limiting**: Implement request rate limiting
 - **Audit Trails**: Enhanced logging and monitoring
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -343,11 +320,7 @@ logging.basicConfig(level=logging.DEBUG)
 5. Run the test suite
 6. Submit a pull request
 
-## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Support
 
 For issues and questions:
 1. Check the troubleshooting section
@@ -355,7 +328,7 @@ For issues and questions:
 3. Run the demo simulation to verify functionality
 4. Create an issue with detailed logs and steps to reproduce
 
-## 🎓 Educational Value
+## Educational Value
 
 This project demonstrates:
 - **Distributed Systems Concepts**: Clock synchronization, mutual exclusion, consensus
