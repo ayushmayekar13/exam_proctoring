@@ -1,0 +1,555 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - Online Exam Proctoring System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2><i class="fas fa-user-graduate me-2"></i>Student Dashboard</h2>
+        <p class="text-muted">Student interface for exam participation</p>
+    </div>
+</div>
+
+<!-- Student Info -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-user me-2"></i>
+                    Student Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="studentRollInput" class="form-label">Your Roll Number</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="studentRollInput" placeholder="e.g., 23102A0018">
+                        <button class="btn btn-outline-primary" onclick="setStudentRoll()">
+                            <i class="fas fa-check me-1"></i>
+                            Set
+                        </button>
+                    </div>
+                </div>
+                <div id="studentInfo" style="display: none;">
+                    <p><strong>Roll:</strong> <span id="currentRoll"></span></p>
+                    <p><strong>Status:</strong> <span id="currentStatus" class="badge bg-secondary">Unknown</span></p>
+                    <p><strong>Marks:</strong> <span id="currentMarks">0</span></p>
+                    <p><strong>Warnings:</strong> <span id="currentWarnings" class="badge bg-secondary">0</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-clock me-2"></i>
+                    Clock Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="clock-display text-center mb-3">
+                    <div id="localTime">--:--:--</div>
+                    <small class="text-muted">Local Time</small>
+                </div>
+                <div class="clock-display text-center mb-3">
+                    <div id="serverTime">--:--:--</div>
+                    <small class="text-muted">Server Time</small>
+                </div>
+                <div class="text-center">
+                    <small class="text-muted">Clock Offset: <span id="clockOffset">0.00s</span></small>
+                </div>
+                <div class="mt-3">
+                    <button class="btn btn-sm btn-outline-primary w-100" onclick="reportTime()">
+                        <i class="fas fa-sync-alt me-1"></i>
+                        Sync Time
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Exam Actions -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-tasks me-2"></i>
+                    Exam Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-primary w-100 mb-2" onclick="requestCriticalSection()" id="csBtn">
+                            <i class="fas fa-lock me-1"></i>
+                            Request CS Access
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-warning w-100 mb-2" onclick="releaseCriticalSection()" id="releaseCsBtn" disabled>
+                            <i class="fas fa-unlock me-1"></i>
+                            Release CS
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-success w-100 mb-2" onclick="submitExam('manual')" id="submitBtn">
+                            <i class="fas fa-paper-plane me-1"></i>
+                            Submit Exam
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-danger w-100 mb-2" onclick="simulateCheating()" id="cheatBtn">
+                            <i class="fas fa-exclamation-triangle me-1"></i>
+                            Simulate Cheating
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Questions Panel -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-question-circle me-2"></i>
+                    Questions
+                </h5>
+                <button class="btn btn-sm btn-outline-secondary" onclick="fetchQuestions()">
+                    <i class="fas fa-sync-alt me-1"></i>
+                    Refresh Questions
+                </button>
+            </div>
+            <div class="card-body" id="questionsContainer">
+                <p class="text-muted">Questions will appear here once the exam starts.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Status Display -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Real-time Status
+                </h5>
+                <div>
+                    <span class="badge bg-info me-2" id="csStatus">
+                        <i class="fas fa-lock me-1"></i>
+                        CS: Not Requested
+                    </span>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="refreshStudentStatus()">
+                        <i class="fas fa-sync-alt me-1"></i>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Exam Status</h6>
+                        <div id="examStatusInfo">
+                            <p class="text-muted">Waiting for exam to start...</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>System Status</h6>
+                        <div id="systemStatusInfo">
+                            <p class="text-muted">System information will appear here...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Activity Log -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-list me-2"></i>
+                    Activity Log
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="log-container" id="activityLog">
+                    <div class="log-entry">
+                        <span class="text-muted">Student dashboard initialized. Waiting for activities...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let currentRoll = null;
+    let eventSource = null;
+    let clockInterval = null;
+    let csAccess = false;
+    let questionsLoaded = false;
+
+    // Initialize dashboard
+    document.addEventListener('DOMContentLoaded', function() {
+        startClock();
+        startEventStream();
+    });
+
+    // Clock display
+    function startClock() {
+        clockInterval = setInterval(updateClock, 1000);
+        updateClock();
+    }
+
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('localTime').textContent = now.toLocaleTimeString();
+        
+        // Simulate server time (in real implementation, this would come from server)
+        const serverTime = new Date(now.getTime() + (Math.random() - 0.5) * 2000);
+        document.getElementById('serverTime').textContent = serverTime.toLocaleTimeString();
+    }
+
+    // Event stream for real-time updates
+    function startEventStream() {
+        if (eventSource) {
+            eventSource.close();
+        }
+        
+        eventSource = new EventSource('/api/events');
+        
+        eventSource.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            updateStudentDashboard(data);
+        };
+        
+        eventSource.onerror = function(event) {
+            console.error('Event stream error:', event);
+            setTimeout(startEventStream, 5000);
+        };
+    }
+
+    // Update student dashboard
+    function updateStudentDashboard(data) {
+        if (data.error) {
+            addLogEntry('Error: ' + data.error, 'error');
+            return;
+        }
+
+        if (!currentRoll) return;
+
+        const students = data.students || {};
+        const student = students[currentRoll];
+        
+        if (student) {
+            updateStudentInfo(student);
+        }
+
+        // Update CS status
+        const csHolder = data.cs_holder || 'None';
+        const csElement = document.getElementById('csStatus');
+        csElement.innerHTML = `<i class="fas fa-lock me-1"></i>CS: ${csHolder}`;
+        csElement.className = csHolder === currentRoll ? 'badge bg-success cs-indicator me-2' : 
+                             csHolder !== 'None' ? 'badge bg-warning me-2' : 'badge bg-info me-2';
+
+        // Update exam status
+        updateExamStatus(data);
+    }
+
+    // Update student information
+    function updateStudentInfo(student) {
+        document.getElementById('currentStatus').textContent = getStatusText(student.status);
+        document.getElementById('currentStatus').className = `badge ${getStatusBadgeClass(student.status)}`;
+        document.getElementById('currentMarks').textContent = student.marks.toFixed(1);
+        document.getElementById('currentWarnings').textContent = student.warnings;
+        document.getElementById('currentWarnings').className = student.warnings > 0 ? 'badge bg-warning' : 'badge bg-secondary';
+        document.getElementById('clockOffset').textContent = student.clock_offset.toFixed(2) + 's';
+    }
+
+    // Update exam status
+    function updateExamStatus(data) {
+        const examStatusInfo = document.getElementById('examStatusInfo');
+        const systemStatusInfo = document.getElementById('systemStatusInfo');
+        
+        if (data.exam_started && !data.exam_ended) {
+            examStatusInfo.innerHTML = `
+                <p class="text-success"><i class="fas fa-play-circle me-2"></i>Exam is in progress</p>
+                <p class="text-muted">You can now participate in the exam</p>
+            `;
+
+            // Fetch questions once when exam starts
+            if (!questionsLoaded) {
+                fetchQuestions();
+            }
+        } else if (data.exam_ended) {
+            examStatusInfo.innerHTML = `
+                <p class="text-danger"><i class="fas fa-stop-circle me-2"></i>Exam has ended</p>
+                <p class="text-muted">No further actions allowed</p>
+            `;
+            questionsLoaded = false;
+            document.getElementById('questionsContainer').innerHTML = '<p class="text-muted">Exam ended.</p>';
+        } else {
+            examStatusInfo.innerHTML = `
+                <p class="text-warning"><i class="fas fa-pause-circle me-2"></i>Exam not started</p>
+                <p class="text-muted">Waiting for teacher to start the exam</p>
+            `;
+            questionsLoaded = false;
+            document.getElementById('questionsContainer').innerHTML = '<p class="text-muted">Questions will appear here once the exam starts.</p>';
+        }
+
+        systemStatusInfo.innerHTML = `
+            <p><strong>Total Students:</strong> ${Object.keys(data.students || {}).length}</p>
+            <p><strong>CS Holder:</strong> ${data.cs_holder || 'None'}</p>
+            <p><strong>Last Update:</strong> ${new Date().toLocaleTimeString()}</p>
+        `;
+    }
+
+    // Student actions
+    function setStudentRoll() {
+        const roll = document.getElementById('studentRollInput').value.trim();
+        if (!roll) {
+            showAlert('Please enter a roll number', 'warning');
+            return;
+        }
+
+        currentRoll = roll;
+        document.getElementById('currentRoll').textContent = roll;
+        document.getElementById('studentInfo').style.display = 'block';
+        document.getElementById('studentRollInput').disabled = true;
+        
+        addLogEntry(`Student roll set to: ${roll}`, 'info');
+        refreshStudentStatus();
+    }
+
+    async function refreshStudentStatus() {
+        if (!currentRoll) {
+            showAlert('Please set your roll number first', 'warning');
+            return;
+        }
+
+        const result = await apiCall(`/api/get_status?roll=${currentRoll}`);
+        if (result.success) {
+            updateStudentInfo(result.student);
+            // If timer present and exam started, try fetching questions
+            if (result.exam_started && !result.exam_ended && !questionsLoaded) {
+                fetchQuestions();
+            }
+            addLogEntry('Status refreshed', 'info');
+        } else {
+            showAlert('Failed to refresh status', 'danger');
+        }
+    }
+
+    async function reportTime() {
+        if (!currentRoll) {
+            showAlert('Please set your roll number first', 'warning');
+            return;
+        }
+
+        const localTime = Date.now() / 1000; // Current time in seconds
+        const result = await apiCall('/api/report_time', 'POST', { 
+            roll: currentRoll, 
+            reported_time: localTime 
+        });
+        
+        if (result.success) {
+            addLogEntry('Time reported for synchronization', 'info');
+            if (result.offset) {
+                addLogEntry(`Clock correction applied: ${result.offset.toFixed(2)}s`, 'info');
+            }
+        } else {
+            showAlert('Failed to report time', 'danger');
+        }
+    }
+
+    // Questions handling
+    async function fetchQuestions() {
+        const res = await apiCall('/api/get_questions');
+        if (res.success) {
+            renderQuestions(res.questions || []);
+            questionsLoaded = true;
+        } else {
+            showAlert('Failed to load questions', 'danger');
+        }
+    }
+
+    function renderQuestions(questions) {
+        const container = document.getElementById('questionsContainer');
+        if (!questions || questions.length === 0) {
+            container.innerHTML = '<p class="text-muted">No questions available.</p>';
+            return;
+        }
+
+        const list = document.createElement('div');
+        questions.forEach(q => {
+            const card = document.createElement('div');
+            card.className = 'mb-3 p-3 border rounded';
+            const optionsHtml = (q.options || []).map(opt => {
+                const inputId = `q_${q.id}_${btoa(opt).replace(/=/g,'')}`;
+                return `
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q_${q.id}" id="${inputId}" value="${opt}" onchange="autosaveAnswer(${q.id}, '${encodeURIComponent(opt)}')">
+                        <label class="form-check-label" for="${inputId}">${opt}</label>
+                    </div>
+                `;
+            }).join('');
+
+            card.innerHTML = `
+                <div class="fw-semibold mb-2">Q${q.id}. ${q.text}</div>
+                ${optionsHtml}
+            `;
+            list.appendChild(card);
+        });
+        container.innerHTML = '';
+        container.appendChild(list);
+    }
+
+    async function autosaveAnswer(questionId, encodedAnswer) {
+        if (!currentRoll) {
+            showAlert('Please set your roll number first', 'warning');
+            return;
+        }
+        const answer = decodeURIComponent(encodedAnswer);
+        const lamport_ts = Date.now();
+        const res = await apiCall('/api/submit_answer', 'POST', {
+            roll: currentRoll,
+            question_id: questionId,
+            answer: answer,
+            mode: 'autosave',
+            lamport_ts: lamport_ts
+        });
+        if (res.success) {
+            addLogEntry(`Autosaved Q${questionId}`, 'info');
+        } else if (res.reason === 'finalized') {
+            addLogEntry('Autosave ignored: final submission already recorded', 'warning');
+        }
+    }
+
+    async function requestCriticalSection() {
+        if (!currentRoll) {
+            showAlert('Please set your roll number first', 'warning');
+            return;
+        }
+
+        const result = await apiCall('/api/request_cs', 'POST', { roll: currentRoll });
+        if (result.success) {
+            if (result.holder === currentRoll) {
+                csAccess = true;
+                document.getElementById('csBtn').disabled = true;
+                document.getElementById('releaseCsBtn').disabled = false;
+                addLogEntry('Critical section access granted!', 'success');
+            } else {
+                addLogEntry('Critical section request queued', 'info');
+            }
+        } else {
+            showAlert(result.message, 'danger');
+        }
+    }
+
+    async function releaseCriticalSection() {
+        if (!currentRoll) {
+            showAlert('Please set your roll number first', 'warning');
+            return;
+        }
+
+        const result = await apiCall('/api/release_cs', 'POST', { roll: currentRoll });
+        if (result.success) {
+            csAccess = false;
+            document.getElementById('csBtn').disabled = false;
+            document.getElementById('releaseCsBtn').disabled = true;
+            addLogEntry('Critical section released', 'info');
+        } else {
+            showAlert(result.message, 'danger');
+        }
+    }
+
+    async function submitExam(mode) {
+        if (!currentRoll) {
+            showAlert('Please set your roll number first', 'warning');
+            return;
+        }
+
+        const result = await apiCall('/api/submit_exam', 'POST', { roll: currentRoll, mode });
+        if (result.success) {
+            addLogEntry(`Exam submitted via ${mode} mode`, 'success');
+            showAlert(result.message, 'success');
+        } else {
+            if (result.reason === 'conflict_resolved') {
+                addLogEntry(`Submit conflict resolved. Winner: ${result.winner}`, 'warning');
+            }
+            showAlert(result.message, 'danger');
+        }
+    }
+
+    async function simulateCheating() {
+        if (!currentRoll) {
+            showAlert('Please set your roll number first', 'warning');
+            return;
+        }
+
+        const evidence = prompt('Enter evidence description:', 'suspicious_activity');
+        if (evidence === null) return;
+
+        const result = await apiCall('/api/cheating', 'POST', { roll: currentRoll, evidence });
+        if (result.success) {
+            addLogEntry(`Cheating simulated: ${evidence}`, 'warning');
+            showAlert(result.message, 'warning');
+        } else {
+            showAlert(result.message, 'danger');
+        }
+    }
+
+    function addLogEntry(message, type = 'info') {
+        const logContainer = document.getElementById('activityLog');
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        
+        const timestamp = new Date().toLocaleTimeString();
+        const icon = type === 'error' ? 'fas fa-exclamation-circle text-danger' : 
+                    type === 'warning' ? 'fas fa-exclamation-triangle text-warning' : 
+                    type === 'success' ? 'fas fa-check-circle text-success' :
+                    'fas fa-info-circle text-info';
+        
+        entry.innerHTML = `
+            <i class="${icon} me-2"></i>
+            <span class="text-muted">[${timestamp}]</span>
+            ${message}
+        `;
+        
+        logContainer.appendChild(entry);
+        logContainer.scrollTop = logContainer.scrollHeight;
+        
+        // Keep only last 50 entries
+        while (logContainer.children.length > 50) {
+            logContainer.removeChild(logContainer.firstChild);
+        }
+    }
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', function() {
+        if (eventSource) {
+            eventSource.close();
+        }
+        if (clockInterval) {
+            clearInterval(clockInterval);
+        }
+    });
+</script>
+{% endblock %}
+

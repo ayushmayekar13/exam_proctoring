@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Online Exam Proctoring System{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron bg-light p-5 rounded">
+            <h1 class="display-4">
+                <i class="fas fa-graduation-cap text-primary me-3"></i>
+                Online Exam Proctoring System
+            </h1>
+            <p class="lead">
+                A comprehensive distributed system for conducting online exams with 
+                cheating detection, time synchronization, and mutual exclusion protocols.
+            </p>
+            <hr class="my-4">
+            <p>
+                This system implements advanced distributed algorithms including:
+            </p>
+            <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success me-2"></i> Berkeley Time Synchronization</li>
+                <li><i class="fas fa-check text-success me-2"></i> Ricart-Agrawala Mutual Exclusion</li>
+                <li><i class="fas fa-check text-success me-2"></i> Load Balancing with Round-Robin</li>
+                <li><i class="fas fa-check text-success me-2"></i> Data Replication Strategy</li>
+                <li><i class="fas fa-check text-success me-2"></i> Conflict Resolution for Simultaneous Submissions</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chalkboard-teacher me-2"></i>
+                    Teacher Dashboard
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Monitor and control the exam session. Register students, start/end exams,
+                    detect cheating, and manage critical section access.
+                </p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-users me-2"></i> Student Registration</li>
+                    <li><i class="fas fa-play me-2"></i> Exam Control</li>
+                    <li><i class="fas fa-exclamation-triangle me-2"></i> Cheating Detection</li>
+                    <li><i class="fas fa-lock me-2"></i> Critical Section Management</li>
+                    <li><i class="fas fa-chart-line me-2"></i> Real-time Monitoring</li>
+                </ul>
+                <a href="/teacher" class="btn btn-primary">
+                    <i class="fas fa-arrow-right me-1"></i>
+                    Go to Teacher Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-user-graduate me-2"></i>
+                    Student Dashboard
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    Student interface for exam participation. View status, submit answers,
+                    and interact with the proctoring system.
+                </p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-clock me-2"></i> Time Synchronization</li>
+                    <li><i class="fas fa-file-upload me-2"></i> Exam Submission</li>
+                    <li><i class="fas fa-lock me-2"></i> Critical Section Access</li>
+                    <li><i class="fas fa-chart-bar me-2"></i> Status Monitoring</li>
+                    <li><i class="fas fa-bell me-2"></i> Real-time Updates</li>
+                </ul>
+                <a href="/student" class="btn btn-success">
+                    <i class="fas fa-arrow-right me-1"></i>
+                    Go to Student Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    System Features
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6><i class="fas fa-shield-alt text-primary me-2"></i>Cheating Detection</h6>
+                        <p class="small">
+                            Two-strike system with automatic warnings and termination.
+                            First offense: 50% mark deduction. Second offense: immediate termination.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6><i class="fas fa-sync-alt text-success me-2"></i>Time Synchronization</h6>
+                        <p class="small">
+                            Berkeley algorithm ensures all student clocks are synchronized
+                            with the server, accounting for network delays and clock skew.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6><i class="fas fa-lock text-warning me-2"></i>Mutual Exclusion</h6>
+                        <p class="small">
+                            Ricart-Agrawala algorithm ensures only one process can access
+                            the marksheet critical section at a time.
+                        </p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <h6><i class="fas fa-balance-scale text-info me-2"></i>Load Balancing</h6>
+                        <p class="small">
+                            Round-robin distribution of read requests across multiple
+                            server replicas for improved performance and reliability.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6><i class="fas fa-copy text-secondary me-2"></i>Data Replication</h6>
+                        <p class="small">
+                            Master-slave replication with automatic failover and
+                            consistency guarantees using version counters.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6><i class="fas fa-handshake text-danger me-2"></i>Conflict Resolution</h6>
+                        <p class="small">
+                            Lamport timestamps and lexicographic ordering resolve
+                            conflicts between simultaneous manual and auto submissions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-cogs me-2"></i>
+                    Quick Start
+                </h5>
+            </div>
+            <div class="card-body">
+                <ol>
+                    <li><strong>Start the System:</strong> Run the coordinator server and load balancer</li>
+                    <li><strong>Register Students:</strong> Use the Teacher Dashboard to register student roll numbers</li>
+                    <li><strong>Start Exam:</strong> Begin the exam session for all registered students</li>
+                    <li><strong>Monitor:</strong> Watch real-time updates and manage the exam session</li>
+                    <li><strong>End Exam:</strong> Terminate the exam and generate reports</li>
+                </ol>
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    <strong>Tip:</strong> Check the demo simulation script for automated testing of all features.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

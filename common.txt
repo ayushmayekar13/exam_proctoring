@@ -1,0 +1,53 @@
+2025-09-21T13:53:03.091209 [test] student_registered: {"roll": "TEST001"}
+2025-09-21T13:59:31.116940 [master] student_registered: {"roll": "23102A0018"}
+2025-09-21T13:59:38.935487 [master] student_registered: {"roll": "23102A0001"}
+2025-09-21T13:59:46.433719 [master] student_registered: {"roll": "23102A0025"}
+2025-09-21T14:00:25.834932 [master] exam_started: {"student_count": 3}
+2025-09-21T14:01:01.894009 [master] cheating_detected: {"roll": "23102A0018", "evidence": "suspicious_activity", "current_warnings": 0, "current_marks": 100.0}
+2025-09-21T14:01:39.334565 [master] cheating_detected: {"roll": "23102A0025", "evidence": "test", "current_warnings": 0, "current_marks": 100.0}
+2025-09-21T14:02:45.358760 [master] cheating_detected: {"roll": "23102A0018", "evidence": "suspicious_activity", "current_warnings": 1, "current_marks": 50.0}
+2025-09-21T14:05:10.202800 [master] exam_ended: {"total_students": 3}
+2025-09-22T13:12:23.190555 [master] student_registered: {"roll": "23102A0018"}
+2025-09-22T13:12:44.622116 [master] exam_started: {"student_count": 1}
+2025-09-22T13:12:57.687916 [master] cheating_detected: {"roll": "23102A0018", "evidence": "suspicious_activity", "current_warnings": 0, "current_marks": 100.0}
+2025-09-22T13:16:30.409099 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758527190.397, "offset": -0.012048959732055664}
+2025-09-23T11:43:34.650829 [master] student_registered: {"roll": "23102A0025"}
+2025-09-23T11:43:45.681164 [master] exam_started: {"student_count": 1}
+2025-09-23T11:44:29.556705 [master] exam_ended: {"total_students": 1}
+2025-09-23T11:47:24.039055 [master] student_registered: {"roll": "23102A0025"}
+2025-09-23T11:47:32.853250 [master] exam_started: {"student_count": 1}
+2025-09-23T11:47:45.590858 [master] cheating_detected: {"roll": "23102A0025", "evidence": "suspicious_activity", "current_warnings": 0, "current_marks": 100.0}
+2025-09-23T11:48:00.315348 [master] cheating_detected: {"roll": "23102A0025", "evidence": "xdfdx", "current_warnings": 1, "current_marks": 50.0}
+2025-09-23T11:48:27.489921 [master] cheating_detected: {"roll": "23102A0025", "evidence": "suspicious_activity", "current_warnings": 2, "current_marks": 0.0}
+2025-09-23T19:08:05.536114 [master] student_registered: {"roll": "23102A0018"}
+2025-09-23T19:08:33.285728 [master] exam_started: {"student_count": 1}
+2025-09-23T19:09:22.086885 [master] student_registered: {"roll": "23102A0025"}
+2025-09-23T19:09:56.671963 [master] exam_ended: {"total_students": 2}
+2025-09-23T19:10:23.558336 [master] cheating_detected: {"roll": "23102A0018", "evidence": "asdf", "current_warnings": 0, "current_marks": 100.0}
+2025-09-23T19:10:39.372900 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634839.365, "offset": -0.007864952087402344}
+2025-09-23T19:10:39.954348 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634839.947, "offset": -0.007325887680053711}
+2025-09-23T19:10:40.420445 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634840.417, "offset": -0.0034379959106445312}
+2025-09-23T19:10:40.584061 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634840.579, "offset": -0.005052089691162109}
+2025-09-23T19:10:40.805202 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634840.798, "offset": -0.007180929183959961}
+2025-09-23T19:10:41.137485 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634841.13, "offset": -0.007462978363037109}
+2025-09-23T19:10:41.337214 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634841.33, "offset": -0.0072002410888671875}
+2025-09-23T19:10:41.554355 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634841.547, "offset": -0.0073392391204833984}
+2025-09-23T19:10:41.753887 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634841.747, "offset": -0.006866931915283203}
+2025-09-23T19:10:41.936838 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634841.93, "offset": -0.0068149566650390625}
+2025-09-23T19:10:42.237303 [master] time_reported: {"roll": "23102A0018", "reported_time": 1758634842.23, "offset": -0.0072841644287109375}
+2025-09-23T19:10:51.139124 [master] time_reported: {"roll": "23102A0025", "reported_time": 1758634851.131, "offset": -0.008101940155029297}
+2025-09-23T19:10:51.537648 [master] time_reported: {"roll": "23102A0025", "reported_time": 1758634851.53, "offset": -0.007631063461303711}
+2025-09-23T19:10:51.920887 [master] time_reported: {"roll": "23102A0025", "reported_time": 1758634851.914, "offset": -0.006866931915283203}
+2025-09-23T19:10:52.271998 [master] time_reported: {"roll": "23102A0025", "reported_time": 1758634852.264, "offset": -0.007977962493896484}
+2025-09-23T19:10:52.587594 [master] time_reported: {"roll": "23102A0025", "reported_time": 1758634852.581, "offset": -0.006579875946044922}
+2025-09-23T19:10:52.952310 [master] time_reported: {"roll": "23102A0025", "reported_time": 1758634852.947, "offset": -0.005300045013427734}
+2025-09-23T19:14:55.405585 [master] student_registered: {"roll": "23102A0018"}
+2025-09-23T19:15:01.844306 [master] student_registered: {"roll": "23102A0025"}
+2025-09-23T19:15:21.571098 [master] exam_started: {"student_count": 2}
+2025-09-23T19:22:39.636565 [master] student_registered: {"roll": "23102A0018"}
+2025-09-23T19:22:44.768426 [master] student_registered: {"roll": "23102A0025"}
+2025-09-23T19:23:16.452101 [master] exam_started: {"student_count": 2}
+2025-09-23T19:23:28.166957 [master] cheating_detected: {"roll": "23102A0018", "evidence": "f", "current_warnings": 0, "current_marks": 100.0}
+2025-09-30T13:15:36.910755 [master] student_registered: {"roll": "23102A0018"}
+2025-09-30T13:15:43.159427 [master] student_registered: {"roll": "23102A0001"}
+2025-09-30T13:15:59.729163 [master] exam_started: {"student_count": 2}

@@ -1,0 +1,25 @@
+# Online Exam Proctoring System - Requirements
+# Core dependencies for the distributed exam proctoring system
+
+# Web Framework
+Flask==2.3.3
+Werkzeug==2.3.7
+
+# XML-RPC (built into Python standard library)
+# xmlrpc.server and xmlrpc.client are part of Python standard library
+
+# Testing
+pytest==7.4.2
+pytest-cov==4.1.0
+unittest-xml-reporting==3.2.0
+
+# Development and Debugging
+pytest-mock==3.11.1
+
+# Optional: For enhanced logging and monitoring
+# redis==4.6.0  # Uncomment if using Redis for persistence
+# psutil==5.9.5  # Uncomment for system monitoring
+
+# Note: This system is designed to work with Python standard library
+# components where possible. The main external dependency is Flask for the web UI.
+
